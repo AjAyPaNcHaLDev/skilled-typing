@@ -1,0 +1,28 @@
+.box {
+  border-radius: 5px;
+  border: 10px solid blueviolet;
+  padding: 10px;
+  margin: auto;
+  margin-top: 10%;
+  max-width: 70%;
+  background-color: aquamarine;
+}
+
+.title {
+  color: rgb(158, 103, 63);
+}
+.h6 {
+  color: rgb(121 121 98);
+}
+
+.button {
+  padding: 5px;
+  border: 1px solid;
+  min-width: 90px;
+  background-color: transparent;
+  color: #76e917;
+  font-weight: 100;
+  font-size: small;
+  text-align: center;
+  border-radius: 0.4em;
+}
