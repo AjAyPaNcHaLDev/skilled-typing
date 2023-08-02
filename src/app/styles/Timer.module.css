@@ -1,0 +1,12 @@
+.blinkAnimation {
+  animation: animate 1s infinite;
+}
+
+@keyframes animate {
+  0% {
+    background: red;
+  }
+  100% {
+    background: white;
+  }
+}

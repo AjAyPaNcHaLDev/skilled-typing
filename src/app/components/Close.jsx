@@ -1,9 +1,12 @@
+"use client"
+import { useRouter } from "next/navigation";
 import React from "react";
-
-const Close = () => {
+import {RiCloseCircleLine} from "react-icons/ri"
+const Close = () => {   
+   const router=useRouter()
   return (
-    <div className="close">
-      Close <span>❌</span>
+    <div className="close">      
+       <span><RiCloseCircleLine onClick={()=>router.back()}/></span>
     </div>
   );
 };

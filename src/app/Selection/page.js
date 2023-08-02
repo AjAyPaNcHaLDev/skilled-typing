@@ -5,12 +5,14 @@ import paragraphs from "@/data/paragraph";
 import box from "../styles/Box.module.css";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { VscGoToFile } from "react-icons/vsc";
+import { MdOutlineDraw } from "react-icons/md";
 const Selection = () => {
   // useClient();
   // const [realTime, setRealTime] = useState(0);
   const [paraId, setParaId] = useState(null);
   const [leng, setleng] = useState(null);
-  const [time, setTime] = useState(10);
+  const [time, setTime] = useState(1);
   const router = useRouter();
   return (
     <div>
@@ -85,6 +87,9 @@ const Selection = () => {
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
               >
+                <option value={1}>1</option>
+                <option value={2}>2</option>
+                <option value={5}>5</option>
                 <option value={10}>10</option>
                 <option value={15}>15</option>
                 <option value={20}>20</option>
@@ -93,31 +98,26 @@ const Selection = () => {
               </select>
               <small style={{ marginLeft: -45 }}>: Min</small>
             </div>
-            <div className="flex-row gap-10" style={{ margin: 10 }}>
+            <div
+              className="flex-row gap-10 align-baseline"
+              style={{ margin: 10 }}
+            >
               <h1>3</h1>
               <button
-                className={box.button}
-                onClick={() =>
-                  router.push(`/Selection/Test?p=${paraId}&t=${time}&l=${leng}`)
-                }
+                className={"btn btn-primary"}
+                onClick={() => {
+                  router.push(
+                    `/Selection/Test?p=${paraId}&t=${time}&l=${leng}`
+                  );
+                }}
               >
-                Start Test
+                <MdOutlineDraw /> Start
               </button>
 
-              <label
-                htmlFor="file-upload"
-                style={{
-                  border: "1px solid blue",
-                  color: "blue",
-                  height: "min-content",
-                  padding: 12,
-                  cursor: "pointer",
-                }}
-                className={box.button}
-              >
-                Custom File
+              <label htmlFor="file-upload" className={"btn"}>
+                <VscGoToFile /> Choose
               </label>
-              <input id="file-upload" type="file" hidden />
+              <input id="file-upload" type="file" accept="text/*" hidden />
             </div>
           </div>
 

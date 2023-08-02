@@ -1,0 +1,23 @@
+.loading {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    padding: 10px 20px;
+    line-height: 0.7rem;
+    position: fixed; 
+    min-width: 90px;
+    color: green;
+    font-weight: 600;
+     
+  }
+  .error {
+    background-color: #dd9191;
+    color: red;
+  }
+  
+  .success {
+    background-color: #bdffae;
+    color: green;
+  }
+  
