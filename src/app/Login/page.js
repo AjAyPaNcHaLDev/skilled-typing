@@ -7,10 +7,12 @@ import Form from "../components/Form";
 const Page = () => {
   return (
     <div>
-      <Box style={{width:"50%"}}>
-        <Close />
+      <Box style={{ width: "50%" }}>
+        <Close url={"/"} />
         <div className="j-center flex-col gap-10  ">
-          <h1 style={{fontFamily:"monospace",fontWeight:200}}>Welcome to Skilled Typing Expert</h1>
+          <h1 style={{ fontFamily: "monospace", fontWeight: 200 }}>
+            Welcome to Skilled Typing Expert
+          </h1>
           <Form />
         </div>
       </Box>

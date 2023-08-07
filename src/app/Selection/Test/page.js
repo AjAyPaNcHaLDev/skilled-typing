@@ -35,9 +35,8 @@ const page = (props) => {
     router.push("/Selection");
     return;
   }
-  var interval;
   const [testCompleted, setTestCompleted] = useState(false);
-  var temp;
+  let temp = useRef("");
   const test = useRef("");
   const typingFoucs = useRef();
   const textArea = "textArea";
@@ -72,6 +71,7 @@ const page = (props) => {
   }, []);
 
   useEffect(() => {
+    var interval;
     if (timeState) {
       interval = setInterval(() => {
         if (minute == 0 && second == 0) {
@@ -150,11 +150,9 @@ const page = (props) => {
     });
 
     const grossSpeed = stream.length / (usedTime.minute + usedTime.second / 60);
-
     const netSpeed =
       stream.length -
       inCorrectWords.length / (usedTime.minute + usedTime.second / 60);
-
     const accuracy = Math.ceil((netSpeed / grossSpeed) * 100);
     igros.current = grossSpeed;
     inet.current = netSpeed < 0 ? 0 : netSpeed;
@@ -175,14 +173,14 @@ const page = (props) => {
       return () => setTimeState(false);
     }
 
-    return () => {
-      temp = e.target.value;
-      setTimeout(() => {
-        if (temp == test.current) {
-          setTimeState(false);
-        }
-      }, 5000);
-    };
+    // return () => {
+    //   temp.current = e.target.value;
+    //   setTimeout(() => {
+    //     if (temp.current == test.current) {
+    //       setTimeState(false);
+    //     }
+    //   }, 5000);
+    // };
   };
   function reStart() {
     test.current = "";

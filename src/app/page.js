@@ -21,7 +21,7 @@ const page = () => {
               ></span>
             </h1>
             <Link
-              href="Login"
+              href="/Login"
               style={{ margin: 10 }}
               className={"btn btn-primary "}
             >

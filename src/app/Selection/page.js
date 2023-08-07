@@ -47,7 +47,7 @@ const Selection = () => {
   return (
     <div>
       <Box>
-        <Close />
+        <Close url={"/Login"} />
         <div>
           <h6>Typeing Test</h6>
           <div className="flex-row gap-10 align-baseline">

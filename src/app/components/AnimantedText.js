@@ -12,7 +12,6 @@ export const AnimantedText = (props) => {
   const [count, setCount] = useState(0);
   const [typingSpeed, setTypingSpeed] = useState(TYPING_SPEED);
 
-  let interval;
   const handleTyping = () => {
     if (text != dataText && !isDeleting) {
       setText(text + dataText[count]);
@@ -31,6 +30,7 @@ export const AnimantedText = (props) => {
     }
   };
   useEffect(() => {
+    let interval;
     setTypingSpeed(isDeleting == true ? DELETING_SPEED : TYPING_SPEED);
     interval = setInterval(handleTyping, typingSpeed);
     return () => clearInterval(interval);
