@@ -170,17 +170,7 @@ const page = (props) => {
     if (stream.length >= wordsArray.current.length + 1) {
       setTestCompleted(true);
       e.target.disabled = true;
-      // return () => setTimeState(false);
     }
-
-    // return () => {
-    //   temp.current = e.target.value;
-    //   setTimeout(() => {
-    //     if (temp.current == test.current) {
-    //       setTimeState(false);
-    //     }
-    //   }, 5000);
-    // };
   };
   function reStart() {
     test.current = "";
@@ -188,7 +178,6 @@ const page = (props) => {
     setSecond(0);
     setUsedTime({ minute: 0, second: 0 });
     setTimeState(false);
-    // setTestSpeed({ grossSpeed: 0, netSpeed: 0, accuracy: 0 });
     igros.current = 0;
     inet.current = 0;
     iaccur.current = 0;
@@ -196,7 +185,6 @@ const page = (props) => {
     document.getElementById(textArea).disabled = false;
     setTestCompleted(false);
     typingFoucs.current.focus();
-
     return;
   }
 
@@ -204,7 +192,7 @@ const page = (props) => {
     <div>
       <Box style={{ marginTop: "1%", background: "transparent" }}>
         <div className="testbox ">
-          <div className="test-area">
+          <div className="testbox-child test-area">
             <div className="test-header">Read & Write the Paragraph</div>
 
             <div className="test-content" style={{ userSelect: "text" }}>
@@ -234,7 +222,7 @@ const page = (props) => {
               ></textarea>
             </div>
           </div>
-          <div className="testSiderBox">
+          <div className="testbox-child testSiderBox">
             <div className="side-box">
               <input
                 type="button"

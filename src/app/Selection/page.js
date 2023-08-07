@@ -139,6 +139,7 @@ const Selection = () => {
                 src={"/images/Hay Typist Welcome.gif"}
                 height={300}
                 width={500}
+                className="hii-image"
               />
             </div>
           </div>

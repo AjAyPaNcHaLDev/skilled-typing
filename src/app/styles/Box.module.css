@@ -16,3 +16,18 @@
   margin-top: 10%;
   color: rgb(16, 96, 233);
 }
+
+@media only screen and (max-width: 600px) {
+  .box {
+    margin-top: 15%;
+    width: 95% !important;
+    height: 90%;
+  }
+
+  .title {
+    margin-top: 10%;
+  }
+  .h4 {
+    margin-top: 20%;
+  }
+}
