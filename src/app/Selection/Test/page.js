@@ -72,6 +72,12 @@ const page = (props) => {
 
   useEffect(() => {
     var interval;
+    if (minute == 0 && second == 0) {
+      toast("Time up");
+      setTestCompleted(true);
+      document.getElementById(textArea).disabled = true;
+    }
+
     if (timeState) {
       interval = setInterval(() => {
         if (minute == 0 && second == 0) {
@@ -158,19 +164,13 @@ const page = (props) => {
     inet.current = netSpeed < 0 ? 0 : netSpeed;
     iaccur.current = accuracy < 0 ? 0 : accuracy;
 
-    if (minute == 0 && second == 0) {
-      toast("Time up");
-      setTestCompleted(true);
-      e.target.disabled = true;
-      return () => setTimeState(false);
-    }
     test.current = e.target.value;
     setTimeState(true);
 
     if (stream.length >= wordsArray.current.length + 1) {
       setTestCompleted(true);
       e.target.disabled = true;
-      return () => setTimeState(false);
+      // return () => setTimeState(false);
     }
 
     // return () => {
@@ -228,7 +228,7 @@ const page = (props) => {
                   e.preventDefault();
                   return false;
                 }}
-                onChange={(e) => testInputHandler(e)()}
+                onChange={(e) => testInputHandler(e)}
                 defaultValue={test.current}
                 autoFocus={true}
               ></textarea>
