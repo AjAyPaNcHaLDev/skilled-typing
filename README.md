@@ -14,4 +14,4 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
- <img align="center" src="https://github.com/AjAyPaNcHaLDev/skilled-typing/blob/master/screenshorts/home.gif" alt="screen_1"  />
+ <a href="https://skilled-typing.vercel.app/"><img align="center" src="https://github.com/AjAyPaNcHaLDev/skilled-typing/blob/master/screenshorts/home.gif" alt="screen_1"  /></a>
