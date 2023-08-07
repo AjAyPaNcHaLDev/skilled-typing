@@ -4,72 +4,84 @@ import Box from "@/app/components/Box";
 import paragraphs from "@/data/paragraph";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 import toast, { Toaster } from "react-hot-toast";
-
-/**
- *
- * This file contain 3 useEffect 2 Function
- * ------------ useEffect--------------
- * 1st useEffect init the paragraph from paragraph.json or localstorage
- * 2nd useEffect use for timer
- * 3rd useEffect use for Escape key listner for exit
- *
- *
- * -------------- functions  ---------
- *
- * function testInputHandler use for text input and result realted opration perform
- * function reStart use for restart the test
- *
- *
- * URL searchParams
- * p  for the paragraph id or file
- * t  for time its required
- * l  for lang not required and not used
- *
- */
-
 const page = (props) => {
+  var interval;
+  const [minute, setMinute] = useState(t);
+  const [second, setSecond] = useState(0);
+  const [usedTime, setUsedTime] = useState({ minute: 0, second: 0 });
+  const [timeState, setTimeState] = useState(false);
+  const [testSpeed, setTestSpeed] = useState({
+    grossSpeed: 0,
+    netSpeed: 0,
+    accuracy: 0,
+  });
+  const test = useRef("");
+  const typingFoucs = useRef();
+  const textArea = "textArea";
+  var temp;
+  const [testCompleted, setTestCompleted] = useState(false);
   const { p = null, t = null, l = null } = props.searchParams;
   const router = useRouter();
   if (!p || !t || p == "null" || t == "null") {
     router.push("/Selection");
     return;
   }
-  var interval;
-  const [testCompleted, setTestCompleted] = useState(false);
-  var temp;
-  const test = useRef("");
-  const typingFoucs = useRef();
-  const textArea = "textArea";
-  const [minute, setMinute] = useState(t);
-  const [second, setSecond] = useState(0);
-  const [usedTime, setUsedTime] = useState({ minute: 0, second: 0 });
-  const [timeState, setTimeState] = useState(false);
-  const [latter, setLatter] = useState("");
-  let igros = useRef(0);
-  let inet = useRef(0);
-  let iaccur = useRef(0);
-  let wordsArray = useRef([]);
-  useEffect(() => {
-    if (p == "testFile") {
-      setLatter(localStorage.getItem(p));
-      wordsArray.current = localStorage.getItem(p).split(" ");
-    } else if (typeof parseInt(p) == "number") {
-      setLatter(
-        paragraphs.filter((para) => {
-          if (para.id == p) return para;
-        })[0]?.text || paragraphs[0].text
-      );
-      wordsArray.current =
-        paragraphs
-          .filter((para) => {
-            if (para.id == p) return para;
-          })[0]
-          ?.text.split(" ") || paragraphs[0].text.split(" ");
+
+  let latter =
+    paragraphs.filter((para) => {
+      if (para.id == p) return para;
+    })[0]?.text || paragraphs[0].text;
+
+  const wordsArray = latter.split(" ") || paragraphs[0].text;
+  const testInputHandler = (e) => {
+    let stream = e.target.value;
+    stream = stream.split(" ");
+    let correctWords = [];
+    let inCorrectWords = [];
+    stream.forEach((word, index) => {
+      if (wordsArray[index] === word) {
+        correctWords.push(word);
+      } else {
+        inCorrectWords.push(word);
+      }
+    });
+    const grossSpeed = stream.length / (usedTime.minute + usedTime.second / 60);
+    const netSpeed =
+      stream.length -
+      inCorrectWords.length / (usedTime.minute + usedTime.second / 60);
+    const accuracy = Math.ceil((netSpeed / grossSpeed) * 100);
+    if (minute == 0 && second == 0) {
+      toast("Time up");
+      setTestCompleted(true);
+      setTestSpeed({ grossSpeed, netSpeed, accuracy });
+      e.target.disabled = true;
+      return () => setTimeState(false);
     }
-    toast.remove();
-    toast("Ready");
-  }, []);
+    test.current = e.target.value;
+    setTimeState(true);
+
+    if (stream.length >= wordsArray.length + 1) {
+      setTestCompleted(true);
+      setTestSpeed({
+        grossSpeed: grossSpeed > 0 ? grossSpeed : 0,
+        netSpeed: netSpeed > 0 ? netSpeed : 0,
+        accuracy: accuracy > 0 ? accuracy : 0,
+      });
+      e.target.disabled = true;
+      return () => setTimeState(false);
+    }
+
+    return () => {
+      temp = e.target.value;
+      setTimeout(() => {
+        if (temp == test.current) {
+          setTimeState(false);
+        }
+      }, 5000);
+    };
+  };
 
   useEffect(() => {
     if (timeState) {
@@ -106,6 +118,20 @@ const page = (props) => {
       }
     };
   });
+
+  function reStart() {
+    test.current = "";
+    setMinute(t);
+    setSecond(0);
+    setUsedTime({ minute: 0, second: 0 });
+    setTimeState(false);
+    setTestSpeed({ grossSpeed: 0, netSpeed: 0, accuracy: 0 });
+    document.getElementById(textArea).value = "";
+    document.getElementById(textArea).disabled = false;
+    setTestCompleted(false);
+    typingFoucs.current.focus();
+    return;
+  }
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === "Escape") {
@@ -135,73 +161,10 @@ const page = (props) => {
       window.removeEventListener("keydown", handleEsc);
     };
   });
-
-  const testInputHandler = (e) => {
-    let stream = e.target.value;
-    stream = stream.split(" ");
-    let correctWords = [];
-    let inCorrectWords = [];
-    stream.forEach((word, index) => {
-      if (wordsArray.current[index] === word) {
-        correctWords.push(word);
-      } else {
-        inCorrectWords.push(word);
-      }
-    });
-
-    const grossSpeed = stream.length / (usedTime.minute + usedTime.second / 60);
-
-    const netSpeed =
-      stream.length -
-      inCorrectWords.length / (usedTime.minute + usedTime.second / 60);
-
-    const accuracy = Math.ceil((netSpeed / grossSpeed) * 100);
-    igros.current = grossSpeed;
-    inet.current = netSpeed < 0 ? 0 : netSpeed;
-    iaccur.current = accuracy < 0 ? 0 : accuracy;
-
-    if (minute == 0 && second == 0) {
-      toast("Time up");
-      setTestCompleted(true);
-      e.target.disabled = true;
-      return () => setTimeState(false);
-    }
-    test.current = e.target.value;
-    setTimeState(true);
-
-    if (stream.length >= wordsArray.current.length + 1) {
-      setTestCompleted(true);
-      e.target.disabled = true;
-      return () => setTimeState(false);
-    }
-
-    return () => {
-      temp = e.target.value;
-      setTimeout(() => {
-        if (temp == test.current) {
-          setTimeState(false);
-        }
-      }, 5000);
-    };
-  };
-  function reStart() {
-    test.current = "";
-    setMinute(t);
-    setSecond(0);
-    setUsedTime({ minute: 0, second: 0 });
-    setTimeState(false);
-    // setTestSpeed({ grossSpeed: 0, netSpeed: 0, accuracy: 0 });
-    igros.current = 0;
-    inet.current = 0;
-    iaccur.current = 0;
-    document.getElementById(textArea).value = "";
-    document.getElementById(textArea).disabled = false;
-    setTestCompleted(false);
-    typingFoucs.current.focus();
-
-    return;
-  }
-
+  useEffect(() => {
+    toast.remove();
+    toast("Ready...");
+  }, []);
   return (
     <div>
       <Box style={{ marginTop: "1%", background: "transparent" }}>
@@ -283,11 +246,11 @@ const page = (props) => {
                     <b>Result</b>
                     <hr />
                     <h4>Gross Speed</h4>
-                    {igros.current} <small>Wpm</small>
+                    {testSpeed.grossSpeed} <small>Wpm</small>
                     <h4> Net Speed</h4>
-                    {inet.current} <small>Wpm</small>
+                    {testSpeed.netSpeed} <small>Wpm</small>
                     <h4> Accuracy</h4>
-                    {iaccur.current}%
+                    {testSpeed.accuracy}%
                   </div>
                 </>
               )}
