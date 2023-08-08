@@ -80,6 +80,11 @@ const page = (props) => {
 
     if (timeState) {
       interval = setInterval(() => {
+        if (testCompleted) {
+          clearInterval(interval);
+          return;
+        }
+
         if (minute == 0 && second == 0) {
           clearInterval(interval);
           return;
@@ -156,13 +161,18 @@ const page = (props) => {
     });
 
     const grossSpeed = stream.length / (usedTime.minute + usedTime.second / 60);
+
     const netSpeed =
-      stream.length -
-      inCorrectWords.length / (usedTime.minute + usedTime.second / 60);
-    const accuracy = Math.ceil((netSpeed / grossSpeed) * 100);
-    igros.current = grossSpeed;
-    inet.current = netSpeed < 0 ? 0 : netSpeed;
-    iaccur.current = accuracy < 0 ? 0 : accuracy;
+      correctWords.length / (usedTime.minute + usedTime.second / 60);
+
+    const totalWords = stream.length; // Total words typed
+    const incorrectWordCount = inCorrectWords.length; // Number of incorrect words
+    const accuracy = ((totalWords - incorrectWordCount) / totalWords) * 100; // Accuracy percentage
+
+    // finding gross speed
+    igros.current = grossSpeed.toFixed(2);
+    inet.current = netSpeed < 0 ? 0 : netSpeed.toFixed(2);
+    iaccur.current = accuracy < 0 ? 0 : accuracy.toFixed(2);
 
     test.current = e.target.value;
     setTimeState(true);

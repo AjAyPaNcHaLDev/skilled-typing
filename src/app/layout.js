@@ -25,9 +25,6 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      {/* style={{background: `url(/images/2302176_7981.jpg)`,backgroundPosition:"cover",backgroundRepeat:"no-repeat",backgroundSize:"cover"}} */}
-
-      {/* <body className={inter.className}  style={{background: `url(/images/2302176_7981.jpg)`,backgroundPosition:"cover",backgroundRepeat:"no-repeat",backgroundSize:"cover"}}>{children}</body> */}
       <body className={inter.className}>
         <Image
           src={"/images/2302176_7981.jpg"}

@@ -151,7 +151,7 @@ const Selection = () => {
               <select
                 style={{ minWidth: 70 }}
                 value={time}
-                onChange={(e) => setTime(e)}
+                onChange={(e) => setTime(e.target.value)}
               >
                 <option value={1}>1</option>
                 <option value={2}>2</option>

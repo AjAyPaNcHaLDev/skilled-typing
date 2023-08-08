@@ -10,9 +10,9 @@ const page = () => {
     <>
       <div>
         <WelcomeToast />
-        <Box style={{ width: "50%" }}>
-          <div className="j-center flex-col gap-10 .f-dir-col">
-            {/* <h1 className={box.h4}>Welcome to Skilled Typing Expert</h1>  */}
+        <Box>
+          {/* <div className="j-center flex-col gap-10 .f-dir-col"> */}
+          <div className=" ">
             <h1 className={box.h4}>
               <AnimantedText />
               <span
@@ -20,14 +20,15 @@ const page = () => {
                 style={{ borderLeft: ".1em solid rgb(16, 96, 233)", height: 2 }}
               ></span>
             </h1>
-            <Link
-              href="/Login"
-              style={{ margin: 10 }}
-              className={"btn btn-primary "}
-            >
-              Let's Start
-            </Link>
           </div>
+          <Link
+            href="/Login"
+            className={
+              " bg-blue-500 hover:bg-blue-700 text-white font-bold p-3  rounded-full "
+            }
+          >
+            Let's Start
+          </Link>
         </Box>
       </div>
     </>
