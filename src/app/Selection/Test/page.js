@@ -199,131 +199,128 @@ const page = (props) => {
   }
 
   return (
-    <div>
-      <Box style={{ marginTop: "1%", background: "transparent" }}>
-        <div className="testbox ">
-          <div className="testbox-child test-area">
-            <div className="test-header">Read & Write the Paragraph</div>
+    <div className="md:container md:mx-auto my-5 ">
+      <div className="testbox grid auto-rows-auto">
+        <div className="testbox-child test-area">
+          <div className="test-header">Read & Write the Paragraph</div>
 
-            <div className="test-content" style={{ userSelect: "text" }}>
-              {latter}
-            </div>
-            <div className="middleText">Please type above texts below</div>
-
-            <div className="test-sheet">
-              <textarea
-                ref={typingFoucs}
-                id={textArea}
-                onCopy={(e) => {
-                  e.preventDefault();
-                  return false;
-                }}
-                onPaste={(e) => {
-                  e.preventDefault();
-                  return false;
-                }}
-                onCut={(e) => {
-                  e.preventDefault();
-                  return false;
-                }}
-                onChange={(e) => testInputHandler(e)}
-                defaultValue={test.current}
-                autoFocus={true}
-              ></textarea>
-            </div>
+          <div className="test-content" style={{ userSelect: "text" }}>
+            {latter}
           </div>
-          <div className="testbox-child testSiderBox">
-            <div className="side-box">
+          <div className="middleText">Please type above texts below</div>
+
+          <div className="test-sheet">
+            <textarea
+              ref={typingFoucs}
+              id={textArea}
+              onCopy={(e) => {
+                e.preventDefault();
+                return false;
+              }}
+              onPaste={(e) => {
+                e.preventDefault();
+                return false;
+              }}
+              onCut={(e) => {
+                e.preventDefault();
+                return false;
+              }}
+              onChange={(e) => testInputHandler(e)}
+              defaultValue={test.current}
+              autoFocus={true}
+            ></textarea>
+          </div>
+        </div>
+        <div className="testbox-child testSiderBox">
+          <div className="side-box">
+            <input
+              type="button"
+              className="mini-box  "
+              style={{
+                color: "red ",
+                ground: "#fffdd",
+                width: "90%",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                if (testCompleted) {
+                  router.push("/Selection");
+                  return;
+                }
+                if (confirm("Sure do went Exit.")) {
+                  router.push("/Selection");
+                  return;
+                }
+              }}
+              value={"Exit"}
+            />
+          </div>
+          <div className="side-box">
+            <div className={" mini-box "}>
+              <h6>Time Left</h6>
+              <span className="minute">
+                {minute > 10 ? minute : `${minute}`}
+              </span>
+              :
+              <span className="second">
+                {second > 10 ? second : `0${second}`}
+              </span>
+            </div>
+            <div className="mini-box">
+              <h6>Running</h6>
+              {usedTime.minute > 10 ? usedTime.minute : `0${usedTime.minute}`}:
+              {usedTime.second > 10 ? usedTime.second : `0${usedTime.second}`}
+            </div>
+            {testCompleted && (
+              <>
+                <div className="mini-box">
+                  <b>Result</b>
+                  <hr />
+                  <h4>Gross Speed</h4>
+                  {igros.current} <small>Wpm</small>
+                  <h4> Net Speed</h4>
+                  {inet.current} <small>Wpm</small>
+                  <h4> Accuracy</h4>
+                  {iaccur.current}%
+                </div>
+              </>
+            )}
+          </div>
+          <div className="side-box">
+            {testCompleted != true ? (
               <input
                 type="button"
-                className="mini-box  "
+                className="mini-box "
                 style={{
                   color: "red ",
-                  ground: "#fffdd",
+                  background: "#fffdd",
                   width: "90%",
                   cursor: "pointer",
                 }}
                 onClick={() => {
-                  if (testCompleted) {
-                    router.push("/Selection");
-                    return;
-                  }
-                  if (confirm("Sure do went Exit.")) {
-                    router.push("/Selection");
-                    return;
-                  }
+                  setTestCompleted(true);
                 }}
-                value={"Exit"}
+                value={"Finish"}
               />
-            </div>
-            <div className="side-box">
-              <div className={" mini-box "}>
-                <h6>Time Left</h6>
-                <span className="minute">
-                  {minute > 10 ? minute : `${minute}`}
-                </span>
-                :
-                <span className="second">
-                  {second > 10 ? second : `0${second}`}
-                </span>
-              </div>
-              <div className="mini-box">
-                <h6>Running</h6>
-                {usedTime.minute > 10 ? usedTime.minute : `0${usedTime.minute}`}
-                :
-                {usedTime.second > 10 ? usedTime.second : `0${usedTime.second}`}
-              </div>
-              {testCompleted && (
-                <>
-                  <div className="mini-box">
-                    <b>Result</b>
-                    <hr />
-                    <h4>Gross Speed</h4>
-                    {igros.current} <small>Wpm</small>
-                    <h4> Net Speed</h4>
-                    {inet.current} <small>Wpm</small>
-                    <h4> Accuracy</h4>
-                    {iaccur.current}%
-                  </div>
-                </>
-              )}
-            </div>
-            <div className="side-box">
-              {testCompleted != true ? (
-                <input
-                  type="button"
-                  className="mini-box "
-                  style={{
-                    color: "red ",
-                    background: "#fffdd",
-                    width: "90%",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    setTestCompleted(true);
-                  }}
-                  value={"Finish"}
-                />
-              ) : (
-                <input
-                  type="button"
-                  className="mini-box "
-                  style={{
-                    color: "green ",
-                    background: "#fffdd",
-                    width: "90%",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    reStart();
-                  }}
-                  value={"Start Again"}
-                />
-              )}
-            </div>
+            ) : (
+              <input
+                type="button"
+                className="mini-box "
+                style={{
+                  color: "green ",
+                  background: "#fffdd",
+                  width: "90%",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  reStart();
+                }}
+                value={"Start Again"}
+              />
+            )}
           </div>
         </div>
-      </Box>
+      </div>
 
       <Toaster position="bottam-left" />
     </div>
