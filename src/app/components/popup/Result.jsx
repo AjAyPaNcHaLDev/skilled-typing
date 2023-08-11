@@ -15,7 +15,7 @@ const Result = ({ usedTime, minute, second, onExit, onRestart, result }) => {
           <div className="flex-col">
             <b>Time Left </b>
             <span>
-              {minute > 10 ? minute : `${minute}`}:
+              {minute > 10 ? minute : `0${minute}`}:
               {second > 10 ? second : `0${second}`} min
             </span>
           </div>
@@ -23,7 +23,7 @@ const Result = ({ usedTime, minute, second, onExit, onRestart, result }) => {
             <b>Time Used </b>
             <span>
               {usedTime.minute > 10 ? usedTime.minute : `0${usedTime.minute}`}:
-              {usedTime.second > 10 ? usedTime.second : `0${usedTime.second}`}
+              {usedTime.second > 10 ? usedTime.second : `0${usedTime.second}`}{" "}
               min
             </span>
           </div>
