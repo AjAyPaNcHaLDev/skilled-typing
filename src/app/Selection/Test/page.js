@@ -72,6 +72,11 @@ const page = (props) => {
   }, []);
 
   useEffect(() => {
+    if (testCompleted) {
+      document.getElementById(textArea).disabled = false;
+    }
+  }, [testCompleted]);
+  useEffect(() => {
     var interval;
     if (minute == 0 && second == 0) {
       toast("Time up");
@@ -245,8 +250,10 @@ const page = (props) => {
                 ground: "#fffdd",
                 cursor: "pointer",
               }}
-              onClick={handleExit}
-              value={"Exit"}
+              onClick={() => {
+                setTestCompleted(true);
+              }}
+              value={"Submit"}
             />
           )}
 
@@ -280,7 +287,7 @@ const page = (props) => {
           <span>Please Type above text below</span>
           <div className={style.hr}></div>
         </div>
-        <textArea
+        <textarea
           className={style["typing-answer"] + " " + style["set-height"]}
           ref={typingFoucs}
           id={textArea}
@@ -299,7 +306,7 @@ const page = (props) => {
           onChange={(e) => testInputHandler(e)}
           defaultValue={test.current}
           autoFocus={true}
-        ></textArea>
+        ></textarea>
       </div>
       {testCompleted == true ? (
         <Result
