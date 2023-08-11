@@ -1,0 +1,64 @@
+.test-main {
+  border-radius: 0.3125rem;
+  background: #373737;
+  min-height: 90vh;
+  position: relative;
+  margin-top: 2rem;
+}
+
+.timer-box {
+  border-radius: 0.8125rem;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  width: 30%;
+  position: relative;
+  top: -20px;
+}
+.box-stop {
+  border-radius: 0.625rem;
+  background: #0fbec9;
+  position: relative;
+  top: -10px;
+}
+.timer-label {
+  color: #000;
+  font-family: Inter;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  font-size: smaller;
+  line-height: normal;
+}
+.typing-content {
+  width: 100%;
+}
+.set-height {
+  max-height: 40vh;
+  line-height: 1.5;
+  overflow-y: scroll;
+  user-select: none;
+  color: white;
+}
+.middle-info {
+  border-radius: 0.8125rem;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.hr {
+  background: #fff;
+}
+.typing-answer {
+  width: 100%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  min-height: 200px;
+
+  background-color: #012f506a;
+}
+
+@media screen and (max-width: 700px) {
+  .timer-box {
+    width: 70%; 
+  }
+}

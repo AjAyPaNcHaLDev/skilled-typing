@@ -15,17 +15,5 @@ export const WelcomeToast = () => {
       }, 1000 * 2);
     }, 1000 * 1);
   });
-  return (
-    <Toaster
-      position="bottam-left"
-      toastOptions={{
-        className: "",
-        style: {
-          background: "transparent",
-          padding: "5px",
-          color: "#713200",
-        },
-      }}
-    />
-  );
+  return <Toaster position="bottam-left" />;
 };

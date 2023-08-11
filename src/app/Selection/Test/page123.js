@@ -5,8 +5,7 @@ import paragraphs from "@/data/paragraph";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
-import style from "./style.module.css";
-import Result from "@/app/components/popup/Result";
+
 /**
  *
  * This file contain 3 useEffect 2 Function
@@ -199,60 +198,66 @@ const page = (props) => {
     return;
   }
 
-  const handleExit = () => {
-    if (testCompleted) {
-      router.push("/Selection");
-      return;
-    }
-    if (confirm("Sure do went Exit.")) {
-      router.push("/Selection");
-      return;
-    }
-  };
   return (
-    <>
-      <div
-        style={{
-          background: `url("/images/blue-concrete-wall-with-scratches.jpg")`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-        }}
-        className={
-          style["test-main"] + " flex flex-col items-center min-h-screen m-2"
-        }
-      >
-        <div className={"flex flex-col items-center  " + style["timer-box"]}>
-          {/*  className={" w-min px-5 " + style["box-stop"]} */}
+    <div className="md:container md:mx-auto my-5 ">
+      <div className="testbox grid auto-rows-auto">
+        <div className="testbox-child test-area">
+          <div className="test-header">Read & Write the Paragraph</div>
 
-          {timeState == true ? (
+          <div className="test-content" style={{ userSelect: "text" }}>
+            {latter}
+          </div>
+          <div className="middleText">Please type above texts below</div>
+
+          <div className="test-sheet">
+            <textarea
+              ref={typingFoucs}
+              id={textArea}
+              onCopy={(e) => {
+                e.preventDefault();
+                return false;
+              }}
+              onPaste={(e) => {
+                e.preventDefault();
+                return false;
+              }}
+              onCut={(e) => {
+                e.preventDefault();
+                return false;
+              }}
+              onChange={(e) => testInputHandler(e)}
+              defaultValue={test.current}
+              autoFocus={true}
+            ></textarea>
+          </div>
+        </div>
+        <div className="testbox-child testSiderBox">
+          <div className="side-box">
             <input
               type="button"
-              className={" w-min px-5 " + style["box-stop"]}
+              className="mini-box  "
               style={{
                 color: "red ",
                 ground: "#fffdd",
+                width: "90%",
                 cursor: "pointer",
               }}
-              onClick={() => setTimeState(false)}
-              value={"Pause"}
-            />
-          ) : (
-            <input
-              type="button"
-              className={" w-min px-5 " + style["box-stop"]}
-              style={{
-                color: "red ",
-                ground: "#fffdd",
-                cursor: "pointer",
+              onClick={() => {
+                if (testCompleted) {
+                  router.push("/Selection");
+                  return;
+                }
+                if (confirm("Sure do went Exit.")) {
+                  router.push("/Selection");
+                  return;
+                }
               }}
-              onClick={handleExit}
               value={"Exit"}
             />
-          )}
-
-          <div className="flex flex-row w-full justify-between p-2 ">
-            <div className={style["timer-label"]}>
-              <h6>Time Left:</h6>
+          </div>
+          <div className="side-box">
+            <div className={" mini-box "}>
+              <h6>Time Left</h6>
               <span className="minute">
                 {minute > 10 ? minute : `${minute}`}
               </span>
@@ -261,57 +266,64 @@ const page = (props) => {
                 {second > 10 ? second : `0${second}`}
               </span>
             </div>
-            <div className={style["timer-label"]}>
-              <h6>Time Used:</h6>
-              <span className="minute">
-                {usedTime.minute > 10 ? usedTime.minute : `0${usedTime.minute}`}
-              </span>
-              :
-              <span className="second">
-                {usedTime.second > 10 ? usedTime.second : `0${usedTime.second}`}
-              </span>
+            <div className="mini-box">
+              <h6>Running</h6>
+              {usedTime.minute > 10 ? usedTime.minute : `0${usedTime.minute}`}:
+              {usedTime.second > 10 ? usedTime.second : `0${usedTime.second}`}
             </div>
+            {testCompleted && (
+              <>
+                <div className="mini-box">
+                  <b>Result</b>
+                  <hr />
+                  <h4>Gross Speed</h4>
+                  {igros.current} <small>Wpm</small>
+                  <h4> Net Speed</h4>
+                  {inet.current} <small>Wpm</small>
+                  <h4> Accuracy</h4>
+                  {iaccur.current}%
+                </div>
+              </>
+            )}
+          </div>
+          <div className="side-box">
+            {testCompleted != true ? (
+              <input
+                type="button"
+                className="mini-box "
+                style={{
+                  color: "red ",
+                  background: "#fffdd",
+                  width: "90%",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  setTestCompleted(true);
+                }}
+                value={"Finish"}
+              />
+            ) : (
+              <input
+                type="button"
+                className="mini-box "
+                style={{
+                  color: "green ",
+                  background: "#fffdd",
+                  width: "90%",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  reStart();
+                }}
+                value={"Start Again"}
+              />
+            )}
           </div>
         </div>
-        <div className={style["typing-content"] + " " + style["set-height"]}>
-          {latter}
-        </div>
-        <div className={style["middle-info"]}>
-          <span>Please Type above text below</span>
-          <div className={style.hr}></div>
-        </div>
-        <textArea
-          className={style["typing-answer"] + " " + style["set-height"]}
-          ref={typingFoucs}
-          id={textArea}
-          onCopy={(e) => {
-            e.preventDefault();
-            return false;
-          }}
-          onPaste={(e) => {
-            e.preventDefault();
-            return false;
-          }}
-          onCut={(e) => {
-            e.preventDefault();
-            return false;
-          }}
-          onChange={(e) => testInputHandler(e)}
-          defaultValue={test.current}
-          autoFocus={true}
-        ></textArea>
       </div>
-      {testCompleted == true ? (
-        <Result
-          minute={minute}
-          second={second}
-          usedTime={usedTime}
-          onExit={handleExit}
-          onRestart={reStart}
-          result={{ igros, inet, iaccur }}
-        />
-      ) : null}
-    </>
+
+      <Toaster position="bottam-left" />
+    </div>
   );
 };
 
