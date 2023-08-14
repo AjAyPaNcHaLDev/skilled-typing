@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import style from "./style.module.css";
 import Result from "@/app/components/popup/Result";
+import typeHindi from "type-hindi";
 /**
  *
  * This file contain 3 useEffect 2 Function
@@ -30,7 +31,7 @@ import Result from "@/app/components/popup/Result";
  */
 
 const page = (props) => {
-  const { p = null, t = null, l = null } = props.searchParams;
+  const { p = null, t = null, l = "English" } = props.searchParams;
   const router = useRouter();
   if (!p || !t || p == "null" || t == "null") {
     router.push("/Selection");
@@ -173,6 +174,7 @@ const page = (props) => {
 
     const totalWords = stream.length; // Total words typed
     const incorrectWordCount = inCorrectWords.length; // Number of incorrect words
+
     const accuracy = ((totalWords - incorrectWordCount) / totalWords) * 100; // Accuracy percentage
 
     // finding gross speed
@@ -280,15 +282,17 @@ const page = (props) => {
             </div>
           </div>
         </div>
-        <div className={style["typing-content"] + " " + style["set-height"]}>
+        <div
+          className={style["typing-content"] + " p-5 " + style["set-height"]}
+        >
           {latter}
         </div>
-        <div className={style["middle-info"]}>
+        <div className={style["middle-info"]} style={{ padding: "0.5rem" }}>
           <span>Please Type above text below</span>
           <div className={style.hr}></div>
         </div>
         <textarea
-          className={style["typing-answer"] + " " + style["set-height"]}
+          className={style["typing-answer"] + " p-5 " + style["set-height"]}
           ref={typingFoucs}
           id={textArea}
           onCopy={(e) => {
@@ -303,6 +307,7 @@ const page = (props) => {
             e.preventDefault();
             return false;
           }}
+          onKeyDown={(e) => (l == "Hindi" ? typeHindi(e) : null)}
           onChange={(e) => testInputHandler(e)}
           defaultValue={test.current}
           autoFocus={true}

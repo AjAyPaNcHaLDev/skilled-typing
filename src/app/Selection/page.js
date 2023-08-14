@@ -4,7 +4,7 @@ import Close from "../components/Close";
 import paragraphs from "@/data/paragraph";
 import box from "../styles/Box.module.css";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { VscGoToFile } from "react-icons/vsc";
 import { MdOutlineDraw } from "react-icons/md";
 import toast, { Toaster } from "react-hot-toast";
@@ -16,6 +16,11 @@ const Selection = () => {
   const router = useRouter();
   const [clock, setClock] = useState({ hh: 0, mm: 0, ss: 0 });
   const [testFile, setTestFile] = useState(false);
+  const focusLang = useRef();
+  const focusFile = useRef();
+  const focusPara = useRef();
+  const focusTime = useRef();
+  const focusSubmit = useRef();
   let interval;
   useEffect(() => {
     const d = new Date();
@@ -65,7 +70,6 @@ const Selection = () => {
                   type="radio"
                   name="lang"
                   value="English"
-                  checked
                   onChange={(e) => setleng(e.target.value)}
                   id="langEng"
                 />
@@ -77,7 +81,6 @@ const Selection = () => {
                 <input
                   type="radio"
                   name="lang"
-                  disabled
                   value="Hindi"
                   onChange={(e) => setleng(e.target.value)}
                   id="langHindi"
@@ -97,19 +100,15 @@ const Selection = () => {
                   return (
                     <div
                       key={p.id}
+                      onClick={() => {
+                        paraId == p.id ? setParaId(null) : setParaId(p.id);
+                        paraId != null ? focusSubmit.current.focus() : null;
+                      }}
                       style={{
                         backgroundColor: paraId == p.id ? "#0ae2ff6e" : null,
                       }}
                     >
-                      {++i}:{" "}
-                      <a
-                        href="#"
-                        onClick={() => {
-                          paraId == p.id ? setParaId(null) : setParaId(p.id);
-                        }}
-                      >
-                        {p.title}
-                      </a>
+                      {++i}: <a href="#">{p.title}</a>
                     </div>
                   );
                 })}
@@ -170,6 +169,7 @@ const Selection = () => {
             >
               <h1>3</h1>
               <button
+                ref={focusSubmit}
                 className={
                   "flex gap-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                 }
